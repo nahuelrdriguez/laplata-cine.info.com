@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartelera — La Plata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-alt:#F7F6F2;
+    --surface:#FFFFFF;
+    --line:#EAE8E2;
+    --text:#16181D;
+    --text-muted:#70737A;
+    --color-comercial:#E0263D;
+    --color-municipal:#2C7DA0;
+    --color-independiente:#E8A33D;
+    --font-display:'Sora','Arial Black',sans-serif;
+    --font-body:'Inter',Arial,sans-serif;
+    --shadow:0 1px 2px rgba(22,24,29,0.04), 0 6px 16px rgba(22,24,29,0.06);
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--bg-alt);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+
+  .hero{
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    padding:3rem 1.5rem 2.2rem;
+  }
+
+  .hero .contenedor{ max-width:760px; margin:0 auto; }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:0.4rem;
+    font-family:var(--font-body);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--color-comercial);
+    font-size:0.75rem;
+    margin:0 0 0.9rem;
+  }
+  .eyebrow::before{
+    content:'';
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--color-comercial);
+    display:inline-block;
+  }
+
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(2.3rem,7vw,3.4rem);
+    letter-spacing:-0.02em;
+    margin:0;
+    line-height:1.05;
+    color:var(--text);
+  }
+
+  .hero .sub{
+    font-size:1rem;
+    color:var(--text-muted);
+    margin:0.8rem 0 0;
+    max-width:36ch;
+  }
+
+  main.contenedor{
+    max-width:760px;
+    margin:0 auto;
+    padding:2rem 1.5rem 4rem;
+  }
+
+  .fila-filtros{
+    display:flex;
+    gap:0.5rem;
+    flex-wrap:wrap;
+    margin-bottom:0.9rem;
+  }
+
+  .dias{ overflow-x:auto; flex-wrap:nowrap; padding-bottom:2px; }
+  .dias::-webkit-scrollbar{ height:4px; }
+  .dias::-webkit-scrollbar-thumb{ background:var(--line); }
+
+  button{
+    font-family:inherit;
+    cursor:pointer;
+  }
+
+  .dia-pill{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.85rem;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text-muted);
+    padding:0.6rem 1.1rem;
+    border-radius:999px;
+    white-space:nowrap;
+    flex:0 0 auto;
+    transition:background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .dia-pill.activo{
+    background:var(--text);
+    border-color:var(--text);
+    color:#fff;
+  }
+
+  .cine-pill{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.85rem;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:0.55rem 1.1rem;
+    border-radius:999px;
+    transition:background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .cine-pill.activo{
+    background:var(--tipo-color,var(--color-comercial));
+    border-color:var(--tipo-color,var(--color-comercial));
+    color:#fff;
+  }
+
+  button:focus-visible{
+    outline:2px solid var(--color-comercial);
+    outline-offset:2px;
+  }
+
+  .lista{
+    margin-top:1.6rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.85rem;
+  }
+
+  .funcion{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:1.2rem 1.4rem;
+    display:flex;
+    gap:1rem;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    box-shadow:var(--shadow);
+  }
+
+  .funcion .etiqueta{
+    display:inline-block;
+    font-size:0.7rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--tipo-color,var(--color-comercial));
+    margin:0 0 0.35rem;
+  }
+
+  .funcion h3{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.15rem;
+    margin:0 0 0.3rem;
+  }
+
+  .funcion .meta{
+    font-size:0.85rem;
+    color:var(--text-muted);
+    margin:0;
+  }
+
+  .funcion-horarios{
+    display:flex;
+    gap:0.4rem;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .horario{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.85rem;
+    background:var(--bg-alt);
+    border:1px solid var(--line);
+    padding:0.4rem 0.7rem;
+    border-radius:8px;
+  }
+
+  .precio{
+    font-family:var(--font-body);
+    font-size:0.8rem;
+    color:var(--text-muted);
+    margin-left:0.3rem;
+  }
+
+  .vacio{
+    font-family:var(--font-body);
+    color:var(--text-muted);
+    font-size:0.9rem;
+    padding:2.5rem 0;
+    text-align:center;
+    border:1px dashed var(--line);
+    border-radius:16px;
+  }
+
+  footer{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 1.5rem 3rem;
+    font-family:var(--font-body);
+    font-size:0.8rem;
+    color:var(--text-muted);
+  }
+
+  @media (max-width:520px){
+    .funcion{ flex-direction:column; }
+    .funcion-horarios{ width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<!--
+  ===========================================================================
+  DATOS DE LA CARTELERA — editá esta sección cada semana, no hace falta
+  tocar nada de HTML/CSS más abajo.
+
+  1) CINES — no hace falta tocarlo salvo que sumes un cine o ciclo nuevo.
+     "tipo" tiene que ser exactamente uno de:
+       "comercial" | "municipal" | "independiente"
+     (define el color de la franja lateral de cada función)
+
+  2) FUNCIONES — una entrada por película + cine + tanda de horarios.
+     - titulo:  nombre de la película
+     - cine:    tiene que matchear el "id" de algún cine de la lista de arriba
+     - sala:    opcional, texto libre (ej "Cinema Paradiso")
+     - ciclo:   opcional, texto libre (ej "Freakshow"); null si no aplica
+     - horarios: array de horas "HH:MM", ej ["18:30", "21:00"]
+     - dias:    "todos" si se repite toda la semana, o un array con los días:
+                0=domingo 1=lunes 2=martes 3=miércoles 4=jueves 5=viernes 6=sábado
+                ej [5, 6] = solo viernes y sábado
+     - precio:  opcional, texto libre (ej "$5.500" o "Gratis")
+
+  Cuando termines, actualizá ULTIMA_ACTUALIZACION un poco más abajo.
+  ===========================================================================
+-->
+<script>
+const ULTIMA_ACTUALIZACION = "6 de julio de 2026";
+
+const CINES = [
+  { id: "cinemalaplata", nombre: "Cinema La Plata",        tipo: "comercial" },
+  { id: "select",        nombre: "Cine Select",             tipo: "municipal" },
+  { id: "ecoselect",     nombre: "Cine EcoSelect",          tipo: "municipal" },
+  { id: "terrestres",    nombre: "Proyecciones Terrestres", tipo: "independiente" },
+];
+
+const FUNCIONES = [
+  {
+    titulo: "Superman",
+    cine: "cinemalaplata",
+    sala: "Cinema Paradiso",
+    ciclo: null,
+    horarios: ["16:00", "19:00"],
+    dias: "todos",
+    precio: "$5.500",
+  },
+  {
+    titulo: "Zootopia 2",
+    cine: "cinemalaplata",
+    sala: "Cinema Ocho",
+    ciclo: null,
+    horarios: ["15:30", "17:45", "20:00"],
+    dias: "todos",
+    precio: "$5.500",
+  },
+  {
+    titulo: "Bleach: Thousand-Year Blood War — The Calamity",
+    cine: "cinemalaplata",
+    sala: "Cinema San Martín",
+    ciclo: null,
+    horarios: ["20:15"],
+    dias: "todos",
+    precio: "$5.500",
+  },
+  {
+    titulo: "Feos, sucios y malos",
+    cine: "select",
+    sala: null,
+    ciclo: "Grandes directores",
+    horarios: ["20:30"],
+    dias: [1],
+    precio: "Gratis",
+  },
+  {
+    titulo: "The twilight Zone",
+    cine: "select",
+    sala: null,
+    ciclo: "Grandes directores",
+    horarios: ["20:30"],
+    dias: [2],
+    precio: "$4000",
+  },
+  {
+    titulo: "Watchmen",
+    cine: "ecoselect",
+    sala: null,
+    ciclo: "Freakshow",
+    horarios: ["21:00"],
+    dias: [6],
+    precio: "$4.000",
+  },
+  {
+    titulo: "Un mundo recobrado",
+    cine: "ecoselect",
+    sala: null,
+    ciclo: "Cineclub",
+    horarios: ["18:00"],
+    dias: [0],
+    precio: "Gratis",
+  },
+  {
+    titulo: "The Dark Crystal",
+    cine: "terrestres",
+    sala: "Barrio Norte",
+    ciclo: "Sagas",
+    horarios: ["20:00"],
+    dias: [5],
+    precio: "$2.000",
+  },
+];
+</script>
+
+<header class="hero">
+  <div class="contenedor">
+    <p class="eyebrow">La Plata ·</p>
+    <h1>Cartelera de cine</h1>
+    <p class="sub">Comerciales, municipales y cineclubes.</p>
+  </div>
+</header>
+
+<main class="contenedor">
+  <div id="dias" class="fila-filtros dias"></div>
+  <div id="cines" class="fila-filtros"></div>
+  <div id="lista" class="lista"></div>
+</main>
+
+<footer>
+  <p>Cartelera armada a mano · última actualización: <span id="actualizado"></span></p>
+</footer>
+
+<script>
+  const DIAS_ABREV = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+
+  function generarDias(cantidad) {
+    const hoy = new Date();
+    const dias = [];
+    for (let i = 0; i < cantidad; i++) {
+      const d = new Date(hoy);
+      d.setDate(hoy.getDate() + i);
+      dias.push({
+        indice: d.getDay(),
+        etiqueta: i === 0 ? "Hoy" : i === 1 ? "Mañana" : `${DIAS_ABREV[d.getDay()]} ${d.getDate()}`,
+      });
+    }
+    return dias;
+  }
+
+  const DIAS = generarDias(7);
+  let diaSeleccionado = 0;
+  let cinesSeleccionados = new Set();
+
+  function aplicaDia(funcion) {
+    if (funcion.dias === "todos") return true;
+    return funcion.dias.includes(DIAS[diaSeleccionado].indice);
+  }
+
+  function cineDe(id) {
+    return CINES.find((c) => c.id === id);
+  }
+
+  function renderDias() {
+    const cont = document.getElementById("dias");
+    cont.innerHTML = DIAS.map(
+      (d, i) => `<button class="dia-pill ${i === diaSeleccionado ? "activo" : ""}" data-i="${i}">${d.etiqueta}</button>`
+    ).join("");
+    cont.querySelectorAll("button").forEach((b) => {
+      b.addEventListener("click", () => {
+        diaSeleccionado = Number(b.dataset.i);
+        render();
+      });
+    });
+  }
+
+  function renderCines() {
+    const cont = document.getElementById("cines");
+    const todosActivo = cinesSeleccionados.size === 0;
+    let html = `<button class="cine-pill ${todosActivo ? "activo" : ""}" data-c="__todos__">Todos</button>`;
+    html += CINES.map((c) => {
+      const activo = cinesSeleccionados.has(c.id);
+      return `<button class="cine-pill ${activo ? "activo" : ""}" data-c="${c.id}" style="--tipo-color:var(--color-${c.tipo})">${c.nombre}</button>`;
+    }).join("");
+    cont.innerHTML = html;
+    cont.querySelectorAll("button").forEach((b) => {
+      b.addEventListener("click", () => {
+        const c = b.dataset.c;
+        if (c === "__todos__") {
+          cinesSeleccionados.clear();
+        } else if (cinesSeleccionados.has(c)) {
+          cinesSeleccionados.delete(c);
+        } else {
+          cinesSeleccionados.add(c);
+        }
+        render();
+      });
+    });
+  }
+
+  function renderLista() {
+    const cont = document.getElementById("lista");
+    const filtradas = FUNCIONES.filter(
+      (f) => aplicaDia(f) && (cinesSeleccionados.size === 0 || cinesSeleccionados.has(f.cine))
+    ).sort((a, b) => a.horarios[0].localeCompare(b.horarios[0]));
+
+    if (filtradas.length === 0) {
+      cont.innerHTML = `<p class="vacio">Todavía no hay funciones cargadas para este día.</p>`;
+      return;
+    }
+
+    cont.innerHTML = filtradas
+      .map((f) => {
+        const cine = cineDe(f.cine);
+        const horarios = f.horarios.map((h) => `<span class="horario">${h}</span>`).join("");
+        const metaPartes = [cine.nombre, f.sala, f.ciclo ? `Ciclo ${f.ciclo}` : null].filter(Boolean);
+        return `
+          <article class="funcion" style="--tipo-color:var(--color-${cine.tipo})">
+            <div>
+              <p class="etiqueta">${cine.tipo}</p>
+              <h3>${f.titulo}</h3>
+              <p class="meta">${metaPartes.join(" · ")}</p>
+            </div>
+            <div class="funcion-horarios">
+              ${horarios}
+              ${f.precio ? `<span class="precio">${f.precio}</span>` : ""}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function render() {
+    renderDias();
+    renderCines();
+    renderLista();
+  }
+
+  document.getElementById("actualizado").textContent = ULTIMA_ACTUALIZACION;
+  render();
+</script>
+
+</body>
+</html>
