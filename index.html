@@ -6,21 +6,21 @@
 <title>Cartelera — La Plata</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Fraunces:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FFFFFF;
-    --bg-alt:#F7F6F2;
-    --surface:#FFFFFF;
-    --line:#EAE8E2;
-    --text:#16181D;
-    --text-muted:#70737A;
-    --color-comercial:#E0263D;
-    --color-municipal:#2C7DA0;
-    --color-independiente:#E8A33D;
-    --font-display:'Sora','Arial Black',sans-serif;
-    --font-body:'Inter',Arial,sans-serif;
-    --shadow:0 1px 2px rgba(22,24,29,0.04), 0 6px 16px rgba(22,24,29,0.06);
+    --bg:#F7F1EA;
+    --bg-alt:#F7F1EA;
+    --surface:#FFFCF8;
+    --line:#E8D6D3;
+    --text:#3C2027;
+    --text-muted:#8C6E75;
+    --color-comercial:#C3536B;
+    --color-municipal:#A98F97;
+    --color-independiente:#D9663D;
+    --font-display:'Fraunces',Georgia,serif;
+    --font-body:'Karla',Arial,sans-serif;
+    --shadow:0 1px 2px rgba(60,32,39,0.05), 0 8px 20px rgba(60,32,39,0.08);
   }
 
   *{ box-sizing:border-box; }
@@ -63,11 +63,18 @@
     display:inline-block;
   }
 
+  .swatch{ display:flex; gap:4px; margin:0 0 1rem; }
+  .swatch span{ width:28px; height:10px; border-radius:2px; }
+  .swatch span:nth-child(1){ background:var(--text); }
+  .swatch span:nth-child(2){ background:var(--color-comercial); }
+  .swatch span:nth-child(3){ background:var(--color-municipal); }
+
   .hero h1{
     font-family:var(--font-display);
-    font-weight:800;
+    font-weight:700;
+    font-style:italic;
     font-size:clamp(2.3rem,7vw,3.4rem);
-    letter-spacing:-0.02em;
+    letter-spacing:-0.01em;
     margin:0;
     line-height:1.05;
     color:var(--text);
@@ -175,8 +182,8 @@
 
   .funcion h3{
     font-family:var(--font-display);
-    font-weight:700;
-    font-size:1.15rem;
+    font-weight:600;
+    font-size:1.2rem;
     margin:0 0 0.3rem;
   }
 
