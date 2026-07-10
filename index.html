@@ -79,11 +79,35 @@
     max-width:36ch;
   }
 
-  main.contenedor{
-    max-width:760px;
-    margin:0 auto;
-    padding:2rem 1.5rem 4rem;
-  }
+main.contenedor{
+  position:relative; /* agregado */
+  max-width:760px;
+  margin:0 auto;
+  padding:2rem 1.5rem 4rem;
+}
+
+.poster{
+  position:absolute;
+  top:180px;
+  width:200px;
+  height:auto;
+  box-shadow:0 12px 30px rgba(60,32,39,0.18);
+  display:none;
+}
+
+.poster-izq{
+  left:-260px;
+  transform:rotate(-2deg);
+}
+
+.poster-der{
+  right:-260px;
+  transform:rotate(2deg);
+}
+
+@media (min-width:1300px){
+  .poster{ display:block; }
+}
 
   .fila-filtros{
     display:flex;
@@ -385,6 +409,8 @@ const FUNCIONES = [
   <div id="dias" class="fila-filtros dias"></div>
   <div id="cines" class="fila-filtros"></div>
   <div id="lista" class="lista"></div>
+  <img src="poster2.jpg" alt="" aria-hidden="true" class="poster poster-izq">
+<img src="poster1.jpg" alt="" aria-hidden="true" class="poster poster-der">
 </main>
 
 <footer>
