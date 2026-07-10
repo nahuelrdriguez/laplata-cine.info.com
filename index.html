@@ -302,31 +302,24 @@ const CINES = [
 
 const FUNCIONES = [
   {
-    titulo: "Superman",
+    titulo: "Amarga Navidad",
     cine: "cinemalaplata",
     sala: "Cinema Paradiso",
     ciclo: null,
-    horarios: ["16:00", "19:00"],
-    dias: "todos",
-    precio: "$5.500",
+    horarios: ["17:45"],
+    dias: "6",
+    precio: "$13.920",
   },
   {
-    titulo: "Zootopia 2",
+    titulo: "Backrooms",
     cine: "cinemalaplata",
-    sala: "Cinema Ocho",
+    sala: "San Martin",
     ciclo: null,
-    horarios: ["15:30", "17:45", "20:00"],
-    dias: "todos",
-    precio: "$5.500",
-  },
-  {
-    titulo: "Bleach: Thousand-Year Blood War — The Calamity",
-    cine: "cinemalaplata",
-    sala: "Cinema San Martín",
-    ciclo: null,
-    horarios: ["20:15"],
-    dias: "todos",
-    precio: "$5.500",
+    horarios: ["12:00","16:20","18:30","23:10"],
+  precio: [
+  { dias: [1, 2, 3], precio: "$8.800" },
+  { dias: [4, 5, 6, 0], precio: "$13.920" },
+],
   },
   {
     titulo: "Los bobos",
@@ -454,6 +447,12 @@ const FUNCIONES = [
   function cineDe(id) {
     return CINES.find((c) => c.id === id);
   }
+  function resolverPrecio(f, diaSemanaIndice) {
+  if (!f.precio) return null;
+  if (typeof f.precio === "string") return f.precio;
+  const regla = f.precio.find((r) => r.dias.includes(diaSemanaIndice));
+  return regla ? regla.precio : null;
+  }
 
   function renderDias() {
     const cont = document.getElementById("dias");
@@ -517,7 +516,7 @@ const FUNCIONES = [
             </div>
             <div class="funcion-horarios">
               ${horarios}
-              ${f.precio ? `<span class="precio">${f.precio}</span>` : ""}
+              ${resolverPrecio(f, DIAS[diaSeleccionado].indice) ? `<span class="precio">${resolverPrecio(f, DIAS[diaSeleccionado].indice)}</span>` : ""}
             </div>
           </article>
         `;
