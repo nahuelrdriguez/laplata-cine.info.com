@@ -86,27 +86,33 @@ main.contenedor{
   padding:2rem 1.5rem 4rem;
 }
 
+.posters{
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-top:2.5rem;
+}
+
 .poster{
-  position:absolute;
-  top:180px;
-  width:200px;
+  width:140px;
   height:auto;
   box-shadow:0 12px 30px rgba(60,32,39,0.18);
-  display:none;
 }
 
-.poster-izq{
-  left:-260px;
-  transform:rotate(-2deg);
-}
-
-.poster-der{
-  right:-260px;
-  transform:rotate(2deg);
-}
+.poster-izq{ transform:rotate(-2deg); }
+.poster-der{ transform:rotate(2deg); }
 
 @media (min-width:1300px){
-  .poster{ display:block; }
+  .posters{
+    display:contents; /* el div "desaparece" del layout, cada poster queda libre para ubicarse solo */
+  }
+  .poster{
+    position:absolute;
+    top:180px;
+    width:200px;
+  }
+  .poster-izq{ left:-260px; }
+  .poster-der{ right:-260px; }
 }
 
   .fila-filtros{
@@ -409,8 +415,10 @@ const FUNCIONES = [
   <div id="dias" class="fila-filtros dias"></div>
   <div id="cines" class="fila-filtros"></div>
   <div id="lista" class="lista"></div>
+<div class="posters">
   <img src="poster2.jpg" alt="" aria-hidden="true" class="poster poster-izq">
-<img src="poster1.jpg" alt="" aria-hidden="true" class="poster poster-der">
+  <img src="poster1.jpg" alt="" aria-hidden="true" class="poster poster-der">
+</div>
 </main>
 
 <footer>
