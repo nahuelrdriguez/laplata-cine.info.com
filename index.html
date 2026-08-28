@@ -271,6 +271,26 @@ main.contenedor{
     .funcion{ flex-direction:column; }
     .funcion-horarios{ width:100%; }
   }
+  .rating-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0.25rem;
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:0.8rem;
+  color:var(--text);
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  padding:0.2rem 0.6rem;
+  border-radius:999px;
+  text-decoration:none;
+  margin-left:0.5rem;
+  vertical-align:middle;
+  }
+  .rating-badge:hover{
+  border-color:var(--color-comercial);
+  color:var(--color-comercial);
+}
 </style>
 </head>
 <body>
@@ -295,6 +315,8 @@ main.contenedor{
                 0=domingo 1=lunes 2=martes 3=miércoles 4=jueves 5=viernes 6=sábado
                 ej [5, 6] = solo viernes y sábado
      - precio:  opcional, texto libre (ej "$5.500" o "Gratis")
+     - rating:         opcional, número (ej 7.8) — puntuación de TMDB
+     - letterboxdUrl:  opcional, texto — se genera con tmdb_rating.py
 
   Cuando termines, actualizá ULTIMA_ACTUALIZACION un poco más abajo.
   ===========================================================================
@@ -318,6 +340,8 @@ const FUNCIONES = [
   ciclo: null,
   horarios: ["12:15","16:35","18:50","23:10"],
   dias: "todos",
+  rating: 7.1,
+  letterboxdUrl: "https://letterboxd.com/search/films/Backrooms/",
   precio: [
     { dias: [1, 2, 3], precio: "$8.800" },
     { dias: [4, 5, 6, 0], precio: "$13.920" },
@@ -796,7 +820,7 @@ const FUNCIONES = [
           <article class="funcion" style="--tipo-color:var(--color-${cine.tipo})">
             <div>
               <p class="etiqueta">${cine.tipo}</p>
-              <h3>${f.titulo}</h3>
+              <h3>${f.titulo} ${f.rating && f.letterboxdUrl ? `<a href="${f.letterboxdUrl}" target="_blank" rel="noopener" class="rating-badge">★ ${f.rating}</a>` : ""}</h3>
               <p class="meta">${metaPartes.join(" · ")}</p>
             </div>
             <div class="funcion-horarios">
