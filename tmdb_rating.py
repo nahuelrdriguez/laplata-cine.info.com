@@ -5,10 +5,11 @@ Rating de TMDB + link a Letterboxd, para la cartelera
 Por qué TMDB y no Letterboxd directo: la API de Letterboxd es por
 aprobación manual (no hay forma de activarla hoy), y scrapear sus páginas
 está bloqueado por detección de bots. TMDB es gratis, de aprobación
-instantánea, y la usamos para traer la puntuación — el botón igual te
-lleva a Letterboxd (a la página de búsqueda de esa película, porque no
-tenemos forma confiable de adivinar la URL exacta del film en Letterboxd
-sin su API).
+instantánea, y la usamos para traer la puntuación y el ID de la película
+— con ese ID armamos el link a Letterboxd usando su formato oficial de
+redirección (letterboxd.com/tmdb/{id}), documentado por ellos mismos para
+integraciones como esta. Va directo a la página de la película, no a una
+búsqueda.
 
 Uso:
     pip install requests
@@ -20,14 +21,13 @@ dentro de FUNCIONES, en tu index.html.
 """
 
 import sys
-import urllib.parse
 
 import requests
 
-TMDB_API_KEY = "a39150777ec90f478b59936578e25306"  # la conseguís gratis en themoviedb.org/settings/api
+TMDB_API_KEY = "TU_API_KEY_ACA"  # la conseguís gratis en themoviedb.org/settings/api
 
 
-def buscar_pelicula(titulo, anio="Backrooms, 2025"):
+def buscar_pelicula(titulo, anio=None):
     params = {"api_key": TMDB_API_KEY, "query": titulo, "language": "es-AR"}
     if anio:
         params["year"] = anio
@@ -40,14 +40,13 @@ def buscar_pelicula(titulo, anio="Backrooms, 2025"):
         return None
 
     peli = resultados[0]
-    letterboxd_query = urllib.parse.quote(peli["title"])
 
     return {
         "titulo_tmdb": peli["title"],
         "rating": round(peli["vote_average"], 1),
         "votos": peli["vote_count"],
         "poster": f"https://image.tmdb.org/t/p/w300{peli['poster_path']}" if peli.get("poster_path") else None,
-        "letterboxd_url": f"https://letterboxd.com/search/films/{letterboxd_query}/",
+        "letterboxd_url": f"https://letterboxd.com/tmdb/{peli['id']}",
     }
 
 
