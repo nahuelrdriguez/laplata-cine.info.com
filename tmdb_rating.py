@@ -24,7 +24,7 @@ import sys
 
 import requests
 
-TMDB_API_KEY = "a39150777ec90f478b59936578e25306"  # la conseguís gratis en themoviedb.org/settings/api
+TMDB_API_KEY = "TU_API_KEY_ACA"  # la conseguís gratis en themoviedb.org/settings/api
 
 
 def buscar_pelicula(titulo, anio=None):
